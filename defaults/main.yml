@@ -1,0 +1,9 @@
+---
+ssh_jumphost: 192.168.56.1
+
+allowed_services: []
+
+allowed_ports: []
+
+allowed_rich_rule:
+  - rule service name="ssh" family="ipv4" source address="{{ ssh_jumphost }}" accept

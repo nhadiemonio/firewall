@@ -1,0 +1,33 @@
+---
+  - name: start ufw
+    systemd:
+      name: ufw
+      enabled: yes
+      state: started
+
+  - name: restart ufw
+    systemd:
+      name: ufw
+      state: restarted
+
+  - name: stop ufw
+    systemd:
+      name: ufw
+      state: stopped
+
+  - name: start firewalld
+    systemd:
+      name: firewalld
+      enabled: yes 
+      state: started
+      
+  - name: restart firewalld
+    systemd:  
+      name: firewalld
+      state: restarted
+      
+  - name: stop firewalld
+    systemd:  
+      name: firewalld
+      state: stopped
+

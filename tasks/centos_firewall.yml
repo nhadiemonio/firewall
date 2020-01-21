@@ -1,0 +1,37 @@
+---
+  - name: install firewalld
+    yum:
+      name: firewalld
+      state: latest
+    notify: restart firewalld
+
+  - name: allowed rich rule
+    firewalld:
+      rich_rule: "{{ item }}"
+      permanent: yes
+      state: enabled
+      zone: public
+    with_items: "{{ allowed_rich_rule }}"
+    notify: restart firewalld
+    when: allowed_rich_rule is defined      
+
+  - name: allowed services
+    firewalld:
+      service: "{{ item }}"
+      permanent: yes
+      state: enabled
+      zone: public
+    with_items: "{{ allowed_services }}"
+    notify: restart firewalld
+    when: allowed_services is defined      
+
+  - name: allowed ports
+    firewalld:
+      port: "{{ item.port }}/{{ item.proto }}"
+      permanent: yes
+      state: enabled
+      zone: public
+    with_items: "{{ allowed_ports }}"
+    notify: restart firewalld
+    when: allowed_ports is defined
+
