@@ -8,11 +8,13 @@
   - name: restart ufw
     systemd:
       name: ufw
+      enabled: yes
       state: restarted
 
   - name: stop ufw
     systemd:
       name: ufw
+      enabled: yes
       state: stopped
 
   - name: start firewalld
@@ -24,10 +26,12 @@
   - name: restart firewalld
     systemd:  
       name: firewalld
+      enabled: yes
       state: restarted
       
   - name: stop firewalld
     systemd:  
       name: firewalld
+      enabled: yes
       state: stopped
 

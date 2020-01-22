@@ -3,15 +3,17 @@
     apt:
       name: ufw
       state: latest
-    notify: restart ufw
-
+ 
+  - name: enable ufw
+    ufw:
+      state: enabled
+ 
   - name: allow SSH from jumphost
     ufw:
       rule: allow
       port: ssh
       proto: tcp
       src: "{{ ssh_jumphost }}"
-    notify: restart ufw
 
   - name: allowed services
     ufw:               
@@ -19,7 +21,6 @@
       port: "{{ item }}"
       state: enabled   
     with_items: "{{ allowed_services }}"
-    notify: restart ufw    
     when: allowed_services is defined
 
   - name: allowed ports
@@ -29,5 +30,10 @@
       proto: "{{ item.proto }}"
       state: enabled
     with_items: "{{ allowed_ports }}"
-    notify: restart ufw             
     when: allowed_ports is defined     
+
+  - name: reload ufw
+    debug:
+      msg: "Restarting ufw"
+    notify: restart ufw
+    changed_when: true
